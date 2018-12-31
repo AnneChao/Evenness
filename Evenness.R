@@ -136,7 +136,7 @@ ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
 ####################################################################################
 
 #'@param type is tax. or phy.
-#'@param type2 is "species" or "k"."species" means each species how much contribution for dissimilarity (1-UqN or 1-CqN).
+#'@param type2 is "species" or "k"."species" means each species how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
 #' "k" means each location how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
 #' @return dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity)
 
@@ -211,7 +211,7 @@ dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   # c(sum(UqN), sum(CqN))
   rbind(UqN, CqN)
 }
-#' plot each species how much contribution for dissimilarity (1-UqN or 1-CqN).
+#' plot each species how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
 #' @param  data is the value of output.
 #' @param title_name is the title name of plot. 
 
