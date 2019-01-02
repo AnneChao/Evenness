@@ -3,7 +3,7 @@
 # 
 #
 ## R scipts "Evenness" for Chao and Ricotta (2019) paper. 
-## This R code is for computing Figure 3, Figure 4 and Figure 5 of Chao and Ricotta (2019) paper.
+## This R code is for computing Figures 3, 4 and 5 of Chao and Ricotta (2019) paper.
 # NOTE: The packages "ggplot2", "dplyr", "ade4", "reshape2", "ggpubr", "phytools", "ape" must be 
 # installed and loaded before running the scripts. 
 # 
