@@ -6,3 +6,5 @@ The code includes four files:
 (2) Alpine phylo_tree: phylogenetic tree of 45 Alpine species 
 (3) Evenness.R: Main code for computing the profiles of six classess of evenness measures and species/node contribution to Jaccard- and         Sorensen-type dissimilarity measures
 (4) Lorenz.R: R code for computing and plotting Lorenz curves of assemblages
+
+More details will be given when Chao and Ricotta's evenness paper is accepted for publication.
