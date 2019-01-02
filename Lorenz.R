@@ -2,8 +2,8 @@
 #********************************************************************************
 # 
 #
-## R scipts "Lorenz" for Chao et al. (2019) evenness paper. 
-## The R code is for plotting Figure 6 of Chao et al. evenness paper.
+## R scipts "Lorenz" for Chao and Ricotta (2019) evenness paper. 
+## The R code is for plotting Figure 6 of Chao and Ricotta's evenness paper.
 # NOTE: The packages "ggplot2" must be installed and loaded before running the scripts. 
 # 
 #
