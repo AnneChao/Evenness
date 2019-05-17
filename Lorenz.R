@@ -24,6 +24,7 @@
 require(ggplot2)
 lcs_table = function(ps){
   lc = function(p,j){
+    p = p[p>0]
     s = length(p)
     p = p/sum(p)
     p = sort(p)
@@ -42,11 +43,10 @@ lcs_table = function(ps){
 lcs_plot = function(curves){
   tmp = data.frame(x=c(0,1),y = c(0,1), source = "Completely even")
   curves = rbind(tmp,curves)
-  legend_label = c("Completely even", "Assemblage I", "Assemblage II")
+  curves$source = factor(curves$source, levels = unique(curves$source))
   g = ggplot(data = curves,aes(x = x,y = y,color = source, linetype = source))
   g = g + geom_line(size = 1.2)+
     geom_point(size = 3.5)+
-    scale_color_hue(labels = legend_label)+
     theme_bw()+
     theme(legend.position="bottom")+
     labs(col = "")+
