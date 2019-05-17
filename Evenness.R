@@ -42,9 +42,9 @@ qD <- function(p,q){
   }
 }
 
-#' @param x is an observed species-by-assemblage frequency matrix. 
+#' @param x is an observed species-by-assemblage frequency vector 
 #' @param q.order the setting is 0 to 2 divided with 0.05 intervals.
-#' @return is the values of all evenness index(6 types).
+#' @return is the values of all evenness indices(6 types).
 
 
 new_fun <- function(x,q.order){
@@ -103,9 +103,18 @@ tax_q_profile <- function(x, name1){
     xlab("Diversity order q")
   #ylim(c(0, 1))
 }
+
+#' @param x is an observed species-by-assemblage frequency matrix. 
+#' @return the vector of two Gini evenness indices.
+Gini_even <- function(x){
+  x <- sort(x[x>0], decreasing = T)/sum(x)
+  S <- length(x)
+  ipi <- sapply(1:S, function(i) i*x[i]) %>% sum
+  c("Non-normalized Gini" = (2*ipi-1)/S, "Normalized Gini" = (2*ipi-2)/(S-1))
+}
 ##########caculate evenness##########
 
-data <- read.table("Alpine data.txt")
+data <- read.table("Alpine data(relative abundance data).txt")
 q <- seq(0, 2, 0.05)
 name1 <- c("E1", "E2", "E3", "E4", "E5", "E6")
 Ricotta_ind_evenness1 <- lapply(list(data[, 1], data[, 2], data[, 3]), function(x) new_fun(x = x, q.order = q))
@@ -114,6 +123,7 @@ Ricotta_ind_evenness3 <- aperm(Ricotta_ind_evenness2, c(1, 3, 2))
 dimnames(Ricotta_ind_evenness3)[[1]] <- paste0("q = ", q)
 dimnames(Ricotta_ind_evenness3)[[2]] <- colnames(data)
 dimnames(Ricotta_ind_evenness3)[[3]] <- name1
+Gini_indices <- apply(data,2,Gini_even)# compute the Gini evenness indices for each assemblage.
 
 ##########plot by value
 ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
@@ -359,5 +369,6 @@ draw_dis_spe(phy_UqN_r, "Jaccard-type phylogenetic dissimilarity", type = "phy")
 draw_dis_spe(phy_CqN_r, "Sorensen-type phylogenetic dissimilarity", type = "phy")
 
 ##################################################
+
 
 
