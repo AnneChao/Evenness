@@ -347,7 +347,7 @@ plot.phylog <- function (x, y = NULL,
 ####################################################################################
 ######arrange data######
 data1 <- read.table("Alpine_relative_abundance_data.txt")
-tree <- read.table("Alpine phylo_tree.txt", header = F)[1,1]
+tree <- read.table("Alpine_phylo_tree.txt", header = F)[1,1]
 tree1 <- newick2phylog(tree)
 plot.phylog(tree1,
             draw.box = TRUE, labels.nodes = names(tree1$nodes), clabel.leaves = 1, clabel.nodes = 1)
