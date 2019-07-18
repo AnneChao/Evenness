@@ -1,19 +1,16 @@
 #*******************************************************************************
 #********************************************************************************
 # 
-#
-## R scipts "Evenness" for Chao and Ricotta (2019) paper. 
-## This R code is for computing Figures 2, 3 and 4 of Chao and Ricotta (2019) Ecology paper.
+## R scipts "Evenness" for Chao and Ricotta (2019) Ecology paper. 
+## This R code is for computing Figures 2, 3 and 4 of Chao and Ricotta (2019) paper.
 # NOTE: The packages "ggplot2", "dplyr", "ade4", "reshape2", "ggpubr", "phytools", "ape" must be 
 # installed and loaded before running the scripts. 
 # 
 #
-#
 # The following R scripts include two parts:  
-# (1). Script for computing the profiles for six classes of evenness measures (Figure 2 in Chao and Ricotta's paper).
+# (1). Script for computing the profiles for six classes of evenness measures (see Figure 2 in Chao and Ricotta's paper).
 # (2). Script for computing the contribution of each species/node to taxonomic dissimarity and/or phylogenetic
-#      dissimarity measures (Figures 3 and 4 in Chao and Ricotta's paper)
-#
+#      dissimarity measures (see Figures 3 and 4 in Chao and Ricotta's paper)
 # 
 #
 #*******************************************************************************
@@ -29,7 +26,7 @@ library(ape)
 
 ####################################################################################
 #
-# (1). Computing the profiles for six classes of evenness measures (Figure 2)
+# (1). Computing the profiles for six classes of evenness measures (Table 1 and Figure 2)
 #
 ####################################################################################
 
@@ -42,10 +39,10 @@ qD <- function(p,q){
   }
 }
 
-#' new_fun computes all six classes of evenness.
-#' @param x is an observed species-by-assemblage abundance or frequency vector 
-#' @param q.order is a vector of diversity order: user must specify a sequence (suggested from 0 to 2 in an increment of 0.05).
-#' @return profiles of all six classes of evenness indices listed in Table 1; see Figure 2 for an example.
+#' new_fun computes all six classes of evenness measures.
+#' @param x is an observed species abundance or frequency vector. 
+#' @param q.order is a vector of diversity orders: user must specify a sequence (suggested range is from 0 to 2 in an increment of 0.05).
+#' @return the profiles of all six classes of evenness indices listed in Table 1; see Figure 2 for output.
 new_fun <- function(x,q.order){
   FUN <- qD
   n <- sum(x)
@@ -101,8 +98,8 @@ tax_q_profile <- function(x, name1){
   #ylim(c(0, 1))
 }
 
-#' Gini_even computes the two Gini evenness indices
-#' @param x is an observed species-by-assemblage abundance or frequency vector. 
+#' Gini_even computes the two Gini evenness indices mentioned in the Discussion section and in Appendix S4.
+#' @param x is an observed species abundance or frequency vector. 
 #' @return a vector of two Gini evenness indices (non-normalized and normalizd).
 Gini_even <- function(x){
   x <- sort(x[x>0], decreasing = T)/sum(x)
@@ -113,7 +110,7 @@ Gini_even <- function(x){
                 
 ####################################################################################
 #
-# Example for (1). Alpine species example (See Figure 2 for output)
+# Example for (1). Alpine species example (See Figure 1 for data and Figure 2 for output)
 #
 ####################################################################################
                 
@@ -140,19 +137,20 @@ ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
 
 ####################################################################################
 #
-# (2). Computing the contribution of each species/node to dissimilarity (Figures 3 and 4)
+# (2). Computing the contribution of each species/node to dissimilarity measures (Figures 3 and 4)
+#      Jaccard-type (1-U_qN) and Sorensen-type (1-C_qN)
 #
 ####################################################################################
-#' dis1 computes the ontribution of each species/node for the two types of dissimilarity measures
+#' dis1 computes the contribution of each species/node to the two types of dissimilarity measures.
 #' @param x is the species-by-assemblages abundance matrix with species names as rownames.
 #' @param q is value for the diversity order.
 #' @param type is tax (taxonomic) or phy (phylogenetic).
 #' @param type2 is "species" or "k"."species" means the contribution of each species/node to the two types of dissimilarity measures 
 #' (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
 #' "k" means the contribution of each assemblage/location/site to the two types of dissimilarity measures 
-#' (Jaccard-type dissimilarity and Sorensen-type dissimilarity). In the worked example, the contribution of each assemblage is not computed.
-#' @tree is the pylog object of the phylogeny tree of all assemblages.
-#' @return the contribution of each species/node for the two types of dissimilarity measures: Jaccard-type (1-U_qN) and Sorensen-type (1-C_qN)
+#' (Jaccard-type dissimilarity and Sorensen-type dissimilarity). In the worked example, the contribution of each assemblage/stage is not computed.
+#' @tree is the pylog object of the phylogenetic tree of all assemblages.
+#' @return the contribution of each species/node to the two types of dissimilarity measures: Jaccard-type (1-U_qN) and Sorensen-type (1-C_qN)
 dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   if(type2 == "species"){
     FUN <- rowSums
@@ -225,11 +223,11 @@ dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   rbind(UqN, CqN)
 }
                 
-#' draw_dis_spe plot the contribution of each species/node to dissimilarity (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
-#' @param data is a merged table of output values with three columns (q = 0, 1, 2).
+#' draw_dis_spe plots the contribution of each species/node to dissimilarity (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
+#' @param data is a merged table of output values with three columns corresponding to output for q = 0, 1, 2.
 #' @param title_name is the title name of plot. 
 #' @type indicates the type of contribution: "tax" for taxonomic and "phy" for phylogenetic       
-#' @return the plot of each contribution.
+#' @return the plot of the contribution of each species/node.
 draw_dis_spe <- function(data, title_name, type = "tax"){
   colnames(data) <- c("q = 0", "q = 1", "q = 2")
   data <- melt(data)
@@ -256,7 +254,7 @@ draw_dis_spe <- function(data, title_name, type = "tax"){
   return(g)
 }
 
-######plot tree (tree in Figure 1)#### 
+######plot tree (see the phylogenetic tree in Figure 1)#### 
 plot.phylog <- function (x, y = NULL,
                          f.phylog = 0.5, cleaves = 1, cnodes = 0,
                          labels.leaves = names(x$leaves), clabel.leaves = 1,
@@ -355,7 +353,7 @@ plot.phylog(tree1,
             draw.box = TRUE, labels.nodes = names(tree1$nodes), clabel.leaves = 1, clabel.nodes = 1)
 
 
-######caculate the contribution of each species for taxonomic dissimarity and then plot #####
+######caculate the contribution of each species to taxonomic dissimarity and then plot #####
 t01 <- t(dis1(data1, 0, type = "tax", type2 = "species"))
 t11 <- t(dis1(data1, 1, type = "tax", type2 = "species"))
 t21 <- t(dis1(data1, 2, type = "tax", type2 = "species"))
@@ -365,7 +363,7 @@ tax_CqN_r <- cbind(t01[, 2], t11[, 2], t21[, 2])
 draw_dis_spe(tax_UqN_r, "Jaccard-type taxonomic dissimilarity")
 draw_dis_spe(tax_CqN_r, "Sorensen-type taxonomic dissimilarity")
 
-######caculate the contribution of each species/node for phylogenetic dissimarity and then plot #####
+######caculate the contribution of each species/node to phylogenetic dissimarity and then plot #####
 
 p01 <- t(dis1(data1, 0, type = "phy", type2 = "species", tree = tree1))
 p11 <- t(dis1(data1, 1, type = "phy", type2 = "species", tree = tree1))
