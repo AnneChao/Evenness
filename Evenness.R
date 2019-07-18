@@ -112,6 +112,11 @@ Gini_even <- function(x){
   ipi <- sapply(1:S, function(i) i*x[i]) %>% sum
   c("Non-normalized Gini" = (2*ipi-1)/S, "Normalized Gini" = (2*ipi-2)/(S-1))
 }
+####################################################################################
+#
+# Example for (1). Alpine species example (See Figure 2 for output)
+#
+####################################################################################
 ##########caculate evenness##########
 
 data <- read.table("Alpine data(relative abundance data).txt")
@@ -125,7 +130,7 @@ dimnames(Ricotta_ind_evenness3)[[2]] <- colnames(data)
 dimnames(Ricotta_ind_evenness3)[[3]] <- name1
 Gini_indices <- apply(data,2,Gini_even)# compute the Gini evenness indices for each assemblage.
 
-##########plot by value
+##########plot ##############
 ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
           tax_q_profile(Ricotta_ind_evenness3[, , 2], name1[2])+ylim(c(0.4, 1)),
           tax_q_profile(Ricotta_ind_evenness3[, , 3], name1[3])+ylim(c(0.4, 1)),
@@ -133,13 +138,6 @@ ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
           tax_q_profile(Ricotta_ind_evenness3[, , 5], name1[5])+ylim(c(0.4, 1)),
           tax_q_profile(Ricotta_ind_evenness3[, , 6], name1[6])+ylim(c(0.4, 1)),
           ncol=3, nrow=2, common.legend = TRUE, legend="bottom")
-
-
-
-
-
-
-
 
 ####################################################################################
 #
@@ -340,6 +338,12 @@ plot.phylog <- function (x, y = NULL,
   
   return(invisible(list(xy=data.frame(x=x, y=y), xbase= xbase, cleaves=cleaves)))
 }
+
+###################################################################################
+#
+# Example for (2). Alpine species example (See Figures 3 and 4 for output)
+#
+####################################################################################
 ######arrange data######
 data1 <- read.table("Alpine data(relative abundance data).txt")
 tree <- read.table("Alpine phylo_tree.txt", header = F)[1,1]
