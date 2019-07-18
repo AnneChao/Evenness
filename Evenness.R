@@ -115,7 +115,7 @@ Gini_even <- function(x){
 ####################################################################################
                 
 ##########caculate evenness##########
-data <- read.table("Alpine data(relative abundance data).txt")
+data <- read.table("Alpine_relative_abundance_data.txt")
 q <- seq(0, 2, 0.05)
 name1 <- c("E1", "E2", "E3", "E4", "E5", "E6")
 Ricotta_ind_evenness1 <- lapply(list(data[, 1], data[, 2], data[, 3]), function(x) new_fun(x = x, q.order = q))
@@ -346,7 +346,7 @@ plot.phylog <- function (x, y = NULL,
 #
 ####################################################################################
 ######arrange data######
-data1 <- read.table("Alpine data(relative abundance data).txt")
+data1 <- read.table("Alpine_relative_abundance_data.txt")
 tree <- read.table("Alpine phylo_tree.txt", header = F)[1,1]
 tree1 <- newick2phylog(tree)
 plot.phylog(tree1,
