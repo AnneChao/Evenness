@@ -10,16 +10,10 @@
 #*******************************************************************************
 #*******************************************************************************
 
-
-
-
-
-
-#====Function for Lorenz Curve====
-#'Run the two functions:"lcs_table" and "lcs_plot" first
-#'lcs_table is use to compute the values of each curve
-#' @param ps is an observed species-by-assemblage frequency matrix. 
-#' @return is the values of each curve.
+#====Functions for computing and plotting Lorenz Curve====
+#'lcs_table is used to compute the values of each Lorenz curve
+#' @param ps is a list of observed abundance/frequency vectors corresponding to multiple assemblages. 
+#' @return the values for plotting the Lorenz curve of each assemblage.
 
 require(ggplot2)
 lcs_table = function(ps){
@@ -37,8 +31,8 @@ lcs_table = function(ps){
 }
 
 #'lcs_plot is used to plot each curve
-#' @param curves is output of function lcs_table.
-#' @return is the plot for Lorenz curve.
+#' @param curves is the output of function lcs_table.
+#' @return the plot for the Lorenz curve of each assemblage.
 
 lcs_plot = function(curves){
   tmp = data.frame(x=c(0,1),y = c(0,1), source = "Completely even")
@@ -60,7 +54,7 @@ lcs_plot = function(curves){
 
 
 #====Example====
-#the input must be a list with each element's name
+#the input must be a list of observed abundance/frequency vectors corresponding to multiple assemblages
 com_1 = c(10, 2)
 com_2 = c(10, 10, 2, 1, 1)
 ps = list(com_1=com_1, com_2 = com_2)
