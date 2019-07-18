@@ -42,9 +42,9 @@ qD <- function(p,q){
   }
 }
 
-#' @param x is an observed species-by-assemblage abundance or frequency matrix 
-#' @param q is the diversity order: the setting is from 0 to 2 in an increment of 0.05.
-#' @return the profiles of all six classes of evenness indices listed in Table 1; see Figure 2 for an example.
+#' @param x is an observed species-by-assemblage abundance or frequency vector 
+#' @param q.order is a vector of diversity order: user must specify a sequence (suggested from 0 to 2 in an increment of 0.05).
+#' @return profiles of all six classes of evenness indices listed in Table 1; see Figure 2 for an example.
 
 
 new_fun <- function(x,q.order){
@@ -104,8 +104,8 @@ tax_q_profile <- function(x, name1){
   #ylim(c(0, 1))
 }
 
-#' @param x is an observed species-by-assemblage abundance or frequency matrix. 
-#' @return the vector of two Gini evenness indices (non-normalized and normalizd).
+#' @param x is an observed species-by-assemblage abundance or frequency vector. 
+#' @return a vector of two Gini evenness indices (non-normalized and normalizd).
 Gini_even <- function(x){
   x <- sort(x[x>0], decreasing = T)/sum(x)
   S <- length(x)
@@ -148,9 +148,11 @@ ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
 ####################################################################################
 
 #'@param type is tax (taxonomic) or phy (phylogenetic).
-#'@param type2 is "species" or "k"."species" means each species how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
-#' "k" means each location how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
-#' @return dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity)
+#'@param type2 is "species" or "k"."species" means the contribution of each species/node to the two types of dissimilarity measures 
+#'(Jaccard-type dissimilarity and Sorensen-type dissimilarity).
+#' "k" means the contribution of each assemblage/location/site to the two types of dissimilarity measures 
+#'(Jaccard-type dissimilarity and Sorensen-type dissimilarity). In the worked example, the contribution of each assemblage is not computed.
+#' @return the contribution of each species/node for the two types of dissimilarity measures: Jaccard-type (1-U_qN) and Sorensen-type (1-C_qN)
 
 dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   if(type2 == "species"){
@@ -223,8 +225,8 @@ dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   # c(sum(UqN), sum(CqN))
   rbind(UqN, CqN)
 }
-#' plot each species how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
-#' @param  data is the value of output.
+#' Plot the contribution of each species/node to dissimilarity (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
+#' @param data is a merged table of output values with three columns (q = 0, 1, 2).
 #' @param title_name is the title name of plot. 
 
 draw_dis_spe <- function(data, title_name, type = "tax"){
@@ -253,7 +255,7 @@ draw_dis_spe <- function(data, title_name, type = "tax"){
   return(g)
 }
 
-######plot tree####
+######plot tree (tree in Figure 1)#### 
 plot.phylog <- function (x, y = NULL,
                          f.phylog = 0.5, cleaves = 1, cnodes = 0,
                          labels.leaves = names(x$leaves), clabel.leaves = 1,
@@ -346,7 +348,7 @@ plot.phylog(tree1,
             draw.box = TRUE, labels.nodes = names(tree1$nodes), clabel.leaves = 1, clabel.nodes = 1)
 
 
-######caculate for tax. dissimarity and then plot.#####
+######caculate the contribution of each species for taxonomic dissimarity and then plot #####
 t01 <- t(dis1(data1, 0, type = "tax", type2 = "species"))
 t11 <- t(dis1(data1, 1, type = "tax", type2 = "species"))
 t21 <- t(dis1(data1, 2, type = "tax", type2 = "species"))
@@ -356,7 +358,7 @@ tax_CqN_r <- cbind(t01[, 2], t11[, 2], t21[, 2])
 draw_dis_spe(tax_UqN_r, "Jaccard-type taxonomic dissimilarity")
 draw_dis_spe(tax_CqN_r, "Sorensen-type taxonomic dissimilarity")
 
-######caculate for phy. dissimarity and plot#####
+######caculate the contribution of each species/node for phylogenetic dissimarity and then plot #####
 
 p01 <- t(dis1(data1, 0, type = "phy", type2 = "species", tree = tree1))
 p11 <- t(dis1(data1, 1, type = "phy", type2 = "species", tree = tree1))
