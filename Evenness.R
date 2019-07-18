@@ -19,19 +19,19 @@
 #*******************************************************************************
 #*******************************************************************************
 
+library(ggplot2)
+library(dplyr)
+library(ade4)
+library(reshape2)
+library(ggpubr)
+library(phytools)
+library(ape)
 
 ####################################################################################
 #
 # (1). Computing the profiles for six classes of evenness measures (Figure 2)
 #
 ####################################################################################
-library(dplyr)
-library(ade4)
-library(phytools)
-library(ggplot2)
-library(ape)
-library(reshape2)
-library(ggpubr)
 
 qD <- function(p,q){
   p <- p[p>0]
