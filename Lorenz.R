@@ -3,7 +3,7 @@
 # 
 #
 ## R scipts "Lorenz" for Chao and Ricotta (2019) evenness paper. 
-## The R code is for plotting Figure 6 of Chao and Ricotta's evenness paper.
+## The R code is for plotting Appendix S4: Figure S1 of Chao and Ricotta's Ecology paper.
 # NOTE: The packages "ggplot2" must be installed and loaded before running the scripts. 
 # 
 #
