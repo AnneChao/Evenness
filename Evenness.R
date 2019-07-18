@@ -42,11 +42,10 @@ qD <- function(p,q){
   }
 }
 
+#' new_fun computes all six classes of evenness.
 #' @param x is an observed species-by-assemblage abundance or frequency vector 
 #' @param q.order is a vector of diversity order: user must specify a sequence (suggested from 0 to 2 in an increment of 0.05).
 #' @return profiles of all six classes of evenness indices listed in Table 1; see Figure 2 for an example.
-
-
 new_fun <- function(x,q.order){
   FUN <- qD
   n <- sum(x)
@@ -79,8 +78,6 @@ new_fun <- function(x,q.order){
   out
 }
 
-
-
 tax_q_profile <- function(x, name1){
   x <- as.data.frame(x)
   x$q.order <-as.character(q)
@@ -104,6 +101,7 @@ tax_q_profile <- function(x, name1){
   #ylim(c(0, 1))
 }
 
+#' Gini_even computes the two Gini evenness indices
 #' @param x is an observed species-by-assemblage abundance or frequency vector. 
 #' @return a vector of two Gini evenness indices (non-normalized and normalizd).
 Gini_even <- function(x){
@@ -112,13 +110,14 @@ Gini_even <- function(x){
   ipi <- sapply(1:S, function(i) i*x[i]) %>% sum
   c("Non-normalized Gini" = (2*ipi-1)/S, "Normalized Gini" = (2*ipi-2)/(S-1))
 }
+                
 ####################################################################################
 #
 # Example for (1). Alpine species example (See Figure 2 for output)
 #
 ####################################################################################
+                
 ##########caculate evenness##########
-
 data <- read.table("Alpine data(relative abundance data).txt")
 q <- seq(0, 2, 0.05)
 name1 <- c("E1", "E2", "E3", "E4", "E5", "E6")
@@ -144,14 +143,16 @@ ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
 # (2). Computing the contribution of each species/node to dissimilarity (Figures 3 and 4)
 #
 ####################################################################################
-
-#'@param type is tax (taxonomic) or phy (phylogenetic).
-#'@param type2 is "species" or "k"."species" means the contribution of each species/node to the two types of dissimilarity measures 
-#'(Jaccard-type dissimilarity and Sorensen-type dissimilarity).
+#' dis1 computes the ontribution of each species/node for the two types of dissimilarity measures
+#' @param x is the species-by-assemblages abundance matrix with species names as rownames.
+#' @param q is value for the diversity order.
+#' @param type is tax (taxonomic) or phy (phylogenetic).
+#' @param type2 is "species" or "k"."species" means the contribution of each species/node to the two types of dissimilarity measures 
+#' (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
 #' "k" means the contribution of each assemblage/location/site to the two types of dissimilarity measures 
-#'(Jaccard-type dissimilarity and Sorensen-type dissimilarity). In the worked example, the contribution of each assemblage is not computed.
+#' (Jaccard-type dissimilarity and Sorensen-type dissimilarity). In the worked example, the contribution of each assemblage is not computed.
+#' @tree is the pylog object of the phylogeny tree of all assemblages.
 #' @return the contribution of each species/node for the two types of dissimilarity measures: Jaccard-type (1-U_qN) and Sorensen-type (1-C_qN)
-
 dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   if(type2 == "species"){
     FUN <- rowSums
@@ -223,10 +224,12 @@ dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
   # c(sum(UqN), sum(CqN))
   rbind(UqN, CqN)
 }
-#' Plot the contribution of each species/node to dissimilarity (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
+                
+#' draw_dis_spe plot the contribution of each species/node to dissimilarity (Jaccard-type dissimilarity and Sorensen-type dissimilarity).
 #' @param data is a merged table of output values with three columns (q = 0, 1, 2).
 #' @param title_name is the title name of plot. 
-
+#' @type indicates the type of contribution: "tax" for taxonomic and "phy" for phylogenetic       
+#' @return the plot of each contribution.
 draw_dis_spe <- function(data, title_name, type = "tax"){
   colnames(data) <- c("q = 0", "q = 1", "q = 2")
   data <- melt(data)
