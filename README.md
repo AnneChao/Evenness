@@ -3,7 +3,7 @@ The data used in the code and in the paper by Chao and Ricotta (2019, Ecology) w
 
 "Evenness" includes four files:
 
-(1) Alpine data: the relative abundances of the 45 Alpine species for three successional stages; see Figure 1.
+(1) Alpine data(relative abundance data): the relative abundances of the 45 Alpine species for three successional stages; see Figure 1.
 
 (2) Alpine phylo_tree: the phylogenetic tree of the 45 Alpine species; see Figure 1. This tree was taken from Ricotta et al. (2015, Appendix A).
 
