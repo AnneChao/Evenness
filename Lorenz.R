@@ -10,12 +10,12 @@
 #*******************************************************************************
 #*******************************************************************************
 
+library(ggplot2)
+
 #====Functions for computing and plotting Lorenz Curve====
 #'lcs_table is used to compute the values of each Lorenz curve
 #' @param ps is a list of observed abundance/frequency vectors corresponding to multiple assemblages. 
 #' @return the values for plotting the Lorenz curve of each assemblage.
-
-require(ggplot2)
 lcs_table = function(ps){
   lc = function(p,j){
     p = p[p>0]
@@ -33,7 +33,6 @@ lcs_table = function(ps){
 #'lcs_plot is used to plot each curve
 #' @param curves is the output of function lcs_table.
 #' @return the plot for the Lorenz curve of each assemblage.
-
 lcs_plot = function(curves){
   tmp = data.frame(x=c(0,1),y = c(0,1), source = "Completely even")
   curves = rbind(tmp,curves)
