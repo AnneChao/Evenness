@@ -3,16 +3,16 @@
 # 
 #
 ## R scipts "Evenness" for Chao and Ricotta (2019) paper. 
-## This R code is for computing Figures 3, 4 and 5 of Chao and Ricotta (2019) paper.
+## This R code is for computing Figures 2, 3 and 4 of Chao and Ricotta (2019) Ecology paper.
 # NOTE: The packages "ggplot2", "dplyr", "ade4", "reshape2", "ggpubr", "phytools", "ape" must be 
 # installed and loaded before running the scripts. 
 # 
 #
 #
 # The following R scripts include two parts:  
-# (1). Script for computing the profiles for six classes of evenness measures (Figure 3 in Chao and Ricotta's paper).
+# (1). Script for computing the profiles for six classes of evenness measures (Figure 2 in Chao and Ricotta's paper).
 # (2). Script for computing the contribution of each species/node to taxonomic dissimarity and/or phylogenetic
-#      dissimarity measures (Figures 4 and 5 in Chao and Ricotta's paper)
+#      dissimarity measures (Figures 3 and 4 in Chao and Ricotta's paper)
 #
 # 
 #
@@ -22,7 +22,7 @@
 
 ####################################################################################
 #
-# (1). Computing the profiles for six classes of evenness measures (Figure 3)
+# (1). Computing the profiles for six classes of evenness measures (Figure 2)
 #
 ####################################################################################
 library(dplyr)
@@ -42,9 +42,9 @@ qD <- function(p,q){
   }
 }
 
-#' @param x is an observed species-by-assemblage frequency vector 
-#' @param q.order the setting is 0 to 2 divided with 0.05 intervals.
-#' @return is the values of all evenness indices(6 types).
+#' @param x is an observed species-by-assemblage abundance or frequency matrix 
+#' @param q is the diversity order: the setting is from 0 to 2 in an increment of 0.05.
+#' @return the profiles of all six classes of evenness indices listed in Table 1; see Figure 2 for an example.
 
 
 new_fun <- function(x,q.order){
@@ -104,8 +104,8 @@ tax_q_profile <- function(x, name1){
   #ylim(c(0, 1))
 }
 
-#' @param x is an observed species-by-assemblage frequency matrix. 
-#' @return the vector of two Gini evenness indices.
+#' @param x is an observed species-by-assemblage abundance or frequency matrix. 
+#' @return the vector of two Gini evenness indices (non-normalized and normalizd).
 Gini_even <- function(x){
   x <- sort(x[x>0], decreasing = T)/sum(x)
   S <- length(x)
@@ -143,11 +143,11 @@ ggarrange(tax_q_profile(Ricotta_ind_evenness3[, , 1], name1[1])+ylim(c(0.4, 1)),
 
 ####################################################################################
 #
-# (2). Computing the contribution of each species/node (Figures 4 and 5)
+# (2). Computing the contribution of each species/node to dissimilarity (Figures 3 and 4)
 #
 ####################################################################################
 
-#'@param type is tax. or phy.
+#'@param type is tax (taxonomic) or phy (phylogenetic).
 #'@param type2 is "species" or "k"."species" means each species how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
 #' "k" means each location how much contribution for dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity).
 #' @return dissimilarity (Jaccard-type dissimilarity or Sorensen-type dissimilarity)
