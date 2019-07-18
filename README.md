@@ -3,9 +3,9 @@ The data used in the code and in the paper by Chao and Ricotta (2019, Ecology) w
 
 "Evenness" includes four files:
 
-(1) Alpine data(relative abundance data): the relative abundances of the 45 Alpine species for three successional stages; see Figure 1.
+(1) Alpine_relative_abundance_data: the relative abundances of the 45 Alpine species for three successional stages; see Figure 1.
 
-(2) Alpine phylo_tree: the phylogenetic tree of the 45 Alpine species; see Figure 1. This tree was taken from Ricotta et al. (2015, Appendix A).
+(2) Alpine_phylo_tree: the phylogenetic tree of the 45 Alpine species; see Figure 1. This tree was taken from Ricotta et al. (2015, Appendix A).
 
 (3) Evenness.R: Main code for computing the profiles of six classess of evenness measures (listed in Table 1 with plots in Figure 2) and for computing the contribution of each species/node to Jaccard-type taxonomic and phylogenetic dissimilarity measures (see Figures 3 and 4). The corresponding contribution to Sorensen-type taxonomic and phylogenetic dissimilarity measures are shown in Appendix S3.
 
