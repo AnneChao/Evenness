@@ -179,7 +179,7 @@ dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
       CqN <- UqN
     }
   }else{
-    Li <- c(tree1$leaves, tree1$nodes)
+    Li <- c(tree$leaves, tree$nodes)
     cumtree = function(a, tree){
       a <- a[names(tree$leaves)]
       for(i in 1:length(tree$parts)){
@@ -188,7 +188,7 @@ dis1 <- function(x, q, type = "tax", type2 = "species", tree = NULL){
       }
       a
     }
-    ai <- apply(x, 2, cumtree, tree1)
+    ai <- apply(x, 2, cumtree, tree)
     wt <- apply(ai, 1, function(x1)(sum(x1))^q/sum(Li*rowSums(ai, na.rm = T)^q))
     N <- ncol(ai)
     zbar <- rowSums(ai)/N
